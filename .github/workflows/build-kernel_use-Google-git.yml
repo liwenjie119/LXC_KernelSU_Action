@@ -79,9 +79,14 @@ jobs:
     - name: Download Google_gcc-4.9 
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-         git clone -q --depth=1 --single-branch https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 -b ${{ env.CLANG_BRANCH }} gcc-64
-         git clone -q --depth=1 --single-branch https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9 -b ${{ env.CLANG_BRANCH }} gcc-32
-
+        mkdir google_gcc-4.9
+        cd ./google_gcc-4.9
+        wget https://gitlab.com/tomxi1997/google_gcc-4.9/-/raw/main/arm-linux-androideabi-4.9.tar.xz
+        tar -xf arm-linux-androideabi-4.9.tar.xz
+        wget https://gitlab.com/tomxi1997/google_gcc-4.9/-/raw/main/aarch64-linux-android-4.9.tar.xz
+        tar -xf aarch64-linux-android-4.9.tar.xz
+        rm *.xz
+        
     - name: Download mkbootimg tools
       if: env.BUILD_BOOT_IMG == 'true'
       run: |
