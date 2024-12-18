@@ -15,6 +15,10 @@ jobs:
       CCACHE_NOHASHDIR: "true"
       CCACHE_HARDLINK: "true"
     steps:
+    - name: Set swap to 10G
+      uses: pierotofy/set-swap-space@master
+      with:
+        swap-size-gb: 10
     - name: Check Server Performance
       run: |
         echo "警告⚠"
@@ -48,7 +52,7 @@ jobs:
         homebrew_clean: "True"
         npm_prune: "True"
         npm_clean: "True"
-        os_swap: "True"
+        os_swap: "false"
 
     - name: Freeing up disk space
       uses: easimon/maximize-build-space@master
@@ -108,10 +112,7 @@ jobs:
         echo "KSU_EXPECTED_HASH=$(cat $CONFIG_ENV | grep -w "KSU_EXPECTED_HASH" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
         echo "ENABLE_LXC=$(cat $CONFIG_ENV | grep -w "ENABLE_LXC" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
         
-    - name: Set swap to 10G
-      uses: pierotofy/set-swap-space@master
-      with:
-        swap-size-gb: 10
+
 
     - name: Setup build kernel environment
       run: |
